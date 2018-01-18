@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 
 import { getPastMushers } from '../api/pastmushers'
 
-import WinningTimesChart from './WinningTimesChart'
-import { StatisticInformation } from './StatisticInformation'
-import WeatherChart from './WeatherChart'
+import WinningTimesChart from '../components/WinningTimesChart'
+import { StatisticInformation } from '../components/StatisticInformation'
+import WeatherChart from '../components/WeatherChart'
 
 import { compareObjectValues } from '../utils/compareObjectValues'
 import { deduplicateAndCountObjectByKey } from '../utils/deduplicateAndCountObjectByKey'

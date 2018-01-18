@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { getMushers } from '../api/mushers'
-import { Results } from './Results'
-import { SearchFilterContainer } from './SearchFilterContainer'
-import LineChart from './LineChart';
+import { Results } from '../components/Results'
+import { SearchFilterContainer } from '../components/SearchFilterContainer'
+import LineChart from '../components/LineChart';
 
 export default class  MushersPage extends Component {
+  
   state = {
     year: 'Year',
     race: 'Race',
     searchQuery: null,
-    mushers: []
+    mushers: null
   }
   
   handleSearchQuery = (query) => {

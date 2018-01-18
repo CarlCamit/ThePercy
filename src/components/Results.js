@@ -1,7 +1,7 @@
 import React from "react";
-import ProfileCard from "./ProfileCard";
+import { ProfileCard } from "./ProfileCard";
 
-export const Results = props => {
+export const Results = (props) => {
   return (
     <div className="field">
       <h2>Results</h2>

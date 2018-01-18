@@ -1,13 +1,13 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
-import Dashboard from '../components/Dashboard'
-import { Header } from '../components/Header/index'
-import { Historical } from '../components/Historical'
-import { MapPage } from '../components/MapPage'
-import MusherPage from '../components/MusherPage'
-import MushersPage from '../components/MushersPage'
-import StatisticsPage from '../components/StatisticsPage'
+import Dashboard from '../containers/Dashboard'
+import { Header } from './Header/index'
+import Historical from '../containers/Historical'
+import MapPage from '../containers/MapPage'
+import MusherPage from '../containers/MusherPage'
+import MushersPage from '../containers/MushersPage'
+import StatisticsPage from '../containers/StatisticsPage'
 
 export const PrimaryLayout = (props) => {
   return (

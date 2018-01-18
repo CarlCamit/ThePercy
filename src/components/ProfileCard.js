@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ProfileCard(props) {
+export const ProfileCard = (props) => {
   return (
     <div className="card">
             <a href={`mushers/${props.musher_id}`}>
@@ -18,5 +18,3 @@ function ProfileCard(props) {
     </div>
   )
 }
-
-export default ProfileCard;

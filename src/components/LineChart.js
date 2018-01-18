@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import MusherLineChart from './MusherLineChart';
+import React from 'react'
+import MusherLineChart from './MusherLineChart'
 
 // Format we want 
 //const series = [
@@ -114,33 +114,21 @@ const generatingData = (data, id, key) => {
   // dataArray = [ {id : props.match.params.id, data: [ ]}]
   // map over the data array passed in, and for each object in the array
   let dataArray = data.map(datum => {
-      if (datum[key] === id) {
-          // Create a new object that adds distance and time key-value pairs to whatever already exists in the dataArray2
-          let item = { ...dataArray, distance: datum.run_dist, time: datum.run_time_str };
-          return item;
-        
-      }
-  });
-  // Add what you've mapped to a new Array that also holds the ID key-value pair
-  let dataObject = { [key]: id, data: dataArray };
-  return dataObject
-};
-
-const filterMusher = () => {
-    let filteredMusher = [];
-    if (this.state.musher_id === 115) {
-        return filteredMusher;
-    }
-    return filteredMusher
+        if (datum[key] === id) {
+            // Create a new object that adds distance and time key-value pairs to whatever already exists in the dataArray2
+            datum = { ...dataArray, distance: datum.run_dist, time: datum.run_time_str };
+        }
+        return datum
+    });
+    // Add what you've mapped to a new Array that also holds the ID key-value pair
+    let dataObject = { [key]: id, data: dataArray };
+    return dataObject
 };
 
 const LineChart = (props) => {
-
-    console.log(generatingData(mySeries, props.match.params.id, 'musher_id'))
-
     return (
         <div>
-            {/* <MusherLineChart props={generatingData(mySeries, props.match.musher_id)} /> */}
+            <MusherLineChart props={generatingData(mySeries, props.match.musher_id)} />
         </div>
     )
 }

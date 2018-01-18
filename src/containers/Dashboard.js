@@ -4,17 +4,18 @@ import DashboardLineChart from '../components/DashboardLineChart'
 
 import { getUpdates } from '../api/updates'
 
-import Timer from '../containers/Timer'
+import Timer from './Timer'
 
-import { Table } from './Table'
+import { Table } from '../components/Table'
 
-const headings = ['Status', 'Name', 'Bib', 'Start', 'Forty Mile In', 'Forty Mile Out', 'Eagle In', 'Eagle Out', 'Forty Mile In', 'Forty Mile Out', 'Finish', 'Total Run Time']
 
 export default class Dashboard extends Component {
   
   state = {
     data: null
   }
+  
+  headings = ['Status', 'Name', 'Bib', 'Start', 'Forty Mile In', 'Forty Mile Out', 'Eagle In', 'Eagle Out', 'Forty Mile In', 'Forty Mile Out', 'Finish', 'Total Run Time']
 
   componentDidMount() {
     getUpdates().then((res) => {
@@ -58,7 +59,7 @@ export default class Dashboard extends Component {
           />
 
         <p>Real Table</p>
-        {!!this.state.data && <Table data={this.generateTableData(this.state.data)} classname={'live-data'} headings={headings} />}
+        {!!this.state.data && <Table data={this.generateTableData(this.state.data)} classname={'live-data'} headings={this.headings} />}
 
       </main>
     )

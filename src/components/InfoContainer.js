@@ -1,6 +1,6 @@
 import React from 'react'
 
-function InfoContainer(props) {
+export const InfoContainer = (props) => {
   return (
     <div className="card">
     <div className="avatar">
@@ -16,5 +16,3 @@ function InfoContainer(props) {
     </div>
   )
 }
-
-export default InfoContainer;
