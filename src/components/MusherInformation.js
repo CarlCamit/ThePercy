@@ -9,7 +9,7 @@ const getCountByObjectKey = (data, id, raceFilter, countName='count') => {
 }
 
 const getHighestPlacing = (data, id) => {
-    let highestPlacing = data.filter((datum) => datum.musher_id === id).slice().sort(compareObjectValues('run_time')).slice(0, 1)
+    let highestPlacing = data.filter((datum) => datum.musher_id === id && datum.standing === '1').slice().sort(compareObjectValues('run_time')).slice(0, 1)
     return highestPlacing
 }
 
@@ -26,7 +26,6 @@ const generateMusherInformation = (data, id) => (
         <span>Fastest Time: {getFastestTimes(data, id)[0].run_time}</span>
     </div>
 )
-
 
 export const MusherInformation = (props) => {
     return (
