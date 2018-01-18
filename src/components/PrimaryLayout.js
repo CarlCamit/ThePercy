@@ -1,8 +1,8 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
+import Dashboard from '../components/Dashboard'
 import { Header } from '../components/Header/index'
-import { Dashboard } from '../components/Dashboard'
 import { Historical } from '../components/Historical'
 import { MapPage } from '../components/MapPage'
 import MusherPage from '../components/MusherPage'
@@ -19,7 +19,7 @@ export const PrimaryLayout = (props) => {
         <Route path='/pastraces' component= {Historical} />
         <Route path='/statistics' component={StatisticsPage} />
         <Route path='/mushers/:id' component={MusherPage} />
-        <Route path='/mushers' render={() => (<MushersPage />)} />
+        <Route path='/mushers' component={MushersPage} />
         <Redirect to='/tracker'  />
       </Switch>
     </div>

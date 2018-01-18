@@ -42,7 +42,7 @@ export default class  MushersPage extends Component {
       ))
     }
     filteredResults = filteredResults.filter((result, index, self) => {
-      return self.map(mapObj => mapObj['musher_id']).indexOf(result['musher_id']) === index
+      return self.map(object => object['musher_id']).indexOf(result['musher_id']) === index
     })
     return filteredResults
   }

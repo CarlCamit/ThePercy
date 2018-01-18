@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import MusherHistoryChart from '../components/MusherRaceHistory';
 import MusherLineChart from './MusherLineChart';
 import { getMushers, getMusher } from '../api/mushers';
+import { getPastMushers } from '../api/pastmushers';
 import ProfileCard from './ProfileCard';
 import LineChart from './LineChart';
+import { MusherInformation } from './MusherInformation';
 
 class MusherPage extends Component {
   state = {
     musher_id: this.props.match.params.id,
     musher: null,
-    mushers: {},
+    mushers: null
   };
 
   componentDidMount() {
@@ -18,8 +20,8 @@ class MusherPage extends Component {
       this.setState({ musher: res[0] })
       
     })
-    .then(() => {
-      console.log(this.state.musher)
+    getPastMushers().then((res) => {
+      this.setState({ mushers: [res] })
     })
     // getMushers()
     // .then(res => {
@@ -41,23 +43,22 @@ class MusherPage extends Component {
   }
 
   render() {
-    const { musher, musher_id } = this.state;
-    
     return (
     <div className="musher-page">
         { !!this.state.musher &&
         <div>
-        <h1>{musher.musher}</h1>
-        <div className="field">
-          <ProfileCard src={ this.getImageAddress(musher) } />
+          <h1>{this.state.musher.musher}</h1>
+          <div className="field">
+            <ProfileCard src={ this.getImageAddress(this.state.musher) } />
+          </div>
         </div>
-        </div>
-      }
+        }
         <LineChart {...this.props} />
         <MusherHistoryChart />
+        <MusherInformation {...this.props} data={this.state.mushers} />
       </div>
-)
-}
+    )
+  }
 }
 
 export default MusherPage

@@ -10,17 +10,17 @@ import { compareObjectValues } from '../utils/compareObjectValues'
 import { deduplicateAndCountObjectByKey } from '../utils/deduplicateAndCountObjectByKey'
 
 const getTopRaces = (data) => {
-  let countArray = deduplicateAndCountObjectByKey(data.filter((data) => (data.race === 'Percy')), 'musher', 'races', 'name').sort(compareObjectValues('races', 'desc')).slice(0, 10)
+  let countArray = deduplicateAndCountObjectByKey(data.filter((datum) => (datum.race === 'Percy')), 'musher', 'races', 'name').sort(compareObjectValues('races', 'desc')).slice(0, 10)
   return countArray
 }
 
 const getTopWins = (data) => {
-  let countArray = deduplicateAndCountObjectByKey(data.filter((data) => (data.standing === '1' && data.race === 'Percy')), 'musher', 'wins', 'name').sort(compareObjectValues('wins', 'desc')).slice(0, 10)
+  let countArray = deduplicateAndCountObjectByKey(data.filter((datum) => (datum.standing === '1' && data.race === 'Percy')), 'musher', 'wins', 'name').sort(compareObjectValues('wins', 'desc')).slice(0, 10)
   return countArray
 }
 
 const getTopTimes = (data) => {
-  let timesArray = data.filter((data) => (data.standing === '1' && data.race === 'Percy'))
+  let timesArray = data.filter((datum) => (datum.standing === '1' && datum.race === 'Percy'))
   .sort(compareObjectValues('run_time'))
   .slice(0, 10)
   .map((datum) => (datum = { name: datum.musher, time: datum.run_time, year: datum.year }))
