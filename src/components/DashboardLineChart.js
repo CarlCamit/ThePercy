@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, ResponsiveContainer, Label} from 'recharts'
+import {compareObjectValues} from '../utils/compareObjectValues';
+
 
 const series = [
   {name: 'Cho', data: [
@@ -117,18 +119,233 @@ const NameColor = [
   {name: "Nick", lineColor: "#dd4124"}
 ]
 
-class DashboardLineChart extends Component {
-	render () {
+
+const currentSeries = [
+    {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "19.15.12",
+        "hours": 19.25
+    },
+    {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 80860,
+        "run_time_str": "06.04.23",
+        "hours": 6.07
+    },
+    {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "19.05.13",
+        "hours": 19.09
+    },
+    {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 80677,
+        "run_time_str": "05.34.21",
+        "hours": 5.57
+    },
+    {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "18.55.19",
+        "hours": 18.92
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 120582,
+        "run_time_str": "10.34.13",
+        "hours": 10.57
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "18.43.46",
+        "hours": 18.73
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 80862,
+        "run_time_str": "07.34.27",
+        "hours": 7.57
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "18.45.50",
+        "hours": 18.76
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 80841,
+        "run_time_str": "05.54.24",
+        "hours": 5.91
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "18.33.43",
+        "hours": 18.56
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 77597,
+        "run_time_str": "05.24.21",
+        "hours": 5.41
+        },
+        {
+        "event_id": "117",
+        "musher_id": "106",
+        "run_dist": 157683,
+        "run_time_str": "18.23.44",
+        "hours": 18.4
+        },
+    {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 197683,
+        "run_time_str": "19.15.12",
+        "hours": 19.25
+    },
+    {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 90860,
+        "run_time_str": "06.04.23",
+        "hours": 6.07
+    },
+    {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 197683,
+        "run_time_str": "19.05.13",
+        "hours": 19.09
+    },
+    {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 90677,
+        "run_time_str": "05.34.21",
+        "hours": 5.57
+    },
+    {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 187683,
+        "run_time_str": "18.55.19",
+        "hours": 18.92
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 130582,
+        "run_time_str": "10.34.13",
+        "hours": 10.57
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 147683,
+        "run_time_str": "18.43.46",
+        "hours": 18.73
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 90862,
+        "run_time_str": "07.34.27",
+        "hours": 7.57
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 147683,
+        "run_time_str": "18.45.50",
+        "hours": 18.76
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 90841,
+        "run_time_str": "05.54.24",
+        "hours": 5.91
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 187683,
+        "run_time_str": "18.33.43",
+        "hours": 18.56
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 87597,
+        "run_time_str": "05.24.21",
+        "hours": 5.41
+        },
+        {
+        "event_id": "119",
+        "musher_id": "106",
+        "run_dist": 187683,
+        "run_time_str": "18.23.44",
+        "hours": 18.4
+        }
+]
+
+
+const generateKeyArray = (data, filterKey) => {
+  let countArray = []
+  data.forEach((datum) => {
+      if (countArray.every((object) => (object[filterKey] !== datum[filterKey]))) {
+          countArray = [ ...countArray, { [filterKey]: datum[filterKey] } ]
+      }
+  })
+  return countArray
+}
+
+    const generateDataStructure = (data, id, key) => {
+        let dataArray = []
+        data.forEach((datum) => {
+            if (datum[key] === id) {
+                return dataArray = [ ...dataArray, { distance: (datum.run_dist/1000), time: datum.hours } ];
+            }
+        })
+        return dataArray
+    }
+
+    const generateData = (data, key) => {
+      let filteredData = generateKeyArray(data, key)
+      filteredData = filteredData.map((object) => {
+        return object = Object.assign({}, object, { data: generateDataStructure(data, object[key], key)} )
+      })
+      return filteredData 
+  }
+  
+ export const DashboardLineChartData = (props) => {
   	return (
+
       <div className="Line-chart-wrapper" style={{ width: "45%", height: "400px", backgroundColor: "#f8f8f8", border: "1px solid black", margin: "10px" }}>
       <ResponsiveContainer padding="1rem">
-        <LineChart width={300} height={300} margin={{top: 30, right: 30, left: 50, bottom: 50}}>
+        <LineChart  data={generateData(currentSeries, "musher_id")} width={300} height={300} margin={{top: 30, right: 30, left: 50, bottom: 50} }>
           <CartesianGrid strokeDasharray="3 3" horizontal={false}/>
           <XAxis dataKey="time" type="number" domain={[0, 50]}  ticks={[10, 20, 30, 40, 50]}>
-            <Label value={['Time (hours)']} offset={-45} position="insideBottom" />
+            <Label name={['Time (hours)']} offset={-45} position="insideBottom" />
           </XAxis>
           <YAxis  dataKey="dist"  type="number"  allowDuplicatedCategory={false} domain={[0, 320]} ticks={[80.4, 159.8, 239.2, 320]} >
-            <Label value={['Distance (km)']} angle={-90} offset={-10} position="insideLeft" style={{ textAnchor: 'middle' }}/> 
+            <Label name={['Distance (km)']} angle={-90} offset={-10} position="insideLeft" style={{ textAnchor: 'middle' }}/> 
           </YAxis>
           <Tooltip/>
           <Legend layout="vertical" verticalAlign="bottom" align="left" content={RenderLegend} />
@@ -146,6 +363,4 @@ class DashboardLineChart extends Component {
       </ResponsiveContainer>
       </div>
     )}
-}
-
-export default DashboardLineChart
+    export default DashboardLineChartData

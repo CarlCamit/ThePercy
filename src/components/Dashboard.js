@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import ProgressBarChart from '../components/ProgressBarChart'
-import DashboardLineChart from '../components/DashboardLineChart'
+import React, { Component } from 'react';
+import { ProgressBarChart } from './ProgressBarChart';
+import DashboardLineChart from './DashboardLineChart';
+
 
 import { getUpdates } from '../api/updates'
 
