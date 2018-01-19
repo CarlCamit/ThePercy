@@ -4,6 +4,30 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell, Re
 import PropTypes from 'prop-types';
 import { getPastMushers } from '../api/pastmushers'
 
+const generateYearsArray = () => {
+  let years = []
+  for (let i = 2000; i < (new Date()).getFullYear(); i++) {
+    years = [ ...years, { year: `${i}` } ]
+  }
+  return years
+}
+
+const determineExperience = (data, id) => {
+  let vetranMushers = data.some((datum) => datum.musher_id === id)
+  let years = generateYearsArray()
+    filteredArray.map((musher) => {
+      return years = years.map((year) => {
+        if (year.year === musher.year) {
+            year = Object.assign({}, year, { [musher.race]: parseFloat((musher.run_time).replace(/:/gi, '.')) })
+        }
+        return year
+    })
+    })
+  return vetranMushers
+}
+
+
+  
 const renderLegend = () => {
   return (
     <div style={{
@@ -52,32 +76,12 @@ class CustomTooltip extends Component{
     bib: PropTypes.string,
   }
 
-  getIntroOfPage(label) {
-    if (label === 1) {
-      return "Percy DeWolfe";
-    } else if (label === 2) {
-      return "Cholena";
-    } else if (label === 3) {
-      return "Gretch";
-    } else if (label === 4) {
-      return "Hannah";
-    } else if (label === 5) {
-      return "Carl";
-    } else if (label === 6) {
-      return "Pat";
-    }
-  }
 
-  // pass this.state.data for data
-  determineExperience = (data, id) => {
-    if (data.some((datum) => datum.musher_id === id)) {
-      // Rookie
-    }
-  }
-  
   componentDidMount() {
     getPastMushers().then((res) => {
       this.setState({ data: res })
+    }).then(() => {
+      this.setState({ data: determineExperience(this.state.mushers) })
     })
   }
 
@@ -85,16 +89,13 @@ class CustomTooltip extends Component{
     const { active } = this.props;
 
     if (active) {
-      const { payload, label } = this.props;
+      const { payload } = this.props;
       return (
         <div className="custom-tooltip">
-          <p className="label">
-       
-
-         
-          {`${label} : ${payload[2].name}`}</p>
-          <p className="intro">{this.getIntroOfPage(label)}</p>
-          <p className="desc">they are getting closer to the finish line....</p>
+          <p className="desc">Distance:</p>
+          <p className="label">         
+          {` ${payload[2].name}`}</p>
+          <p className="intro">{`${payload.name(label)}`}</p>
         </div>
       );
     }
@@ -102,68 +103,6 @@ class CustomTooltip extends Component{
     return null;
   }
 };
-
-/*
-const rookieOrVetran = () => {
-  let vetranBibId = []
-
-data.forEach((datum) => {
-  if musher_bib === musher_bib
-  return vetranBibId.splice()
-}
-*/
- 
-
-/*
-const generateKeyArray = (data, filterKey) => {
-  let countArray = []
-  data.forEach((datum) => {
-    if (countArray.every((object) => (object [filterKey] != datum[filterKey] ))) {
-      countArray = [...countArray, {
-        [filterKey]: datum[filterKey] 
-      }]
-    }
-  })
-  return countArray
-}
-
-const generateDataStructure = (data, id, key) => {
-  let dataArray = []
-  data.forEach((datum) => {
-    if (datum[key] == id) {
-      return dataArray = [ ...dataArray, {
-        distance: datum.run_dist } ];
-      }
-    })
-  return dataArray
-}
-
-const generateData = (data, key) => {
-  let filteredData = generateKeyArray(data, key)
-  filteredData = filterData.map((object) => {
-    return object = Object.assign({},
-    object, {data: generateDataStructure (data, object[key], key )} )
-  })
-  return filteredData
-}
-*/
-/* class ProgressBarChart extends Component {
-  constructor(props) {
-    super(props);
-
-    state = {
-      mushers: null,
-      data: null
-    }
-  
-    componentDidMount() {
-      getMushers().then((res) => {
-        this.setState({ mushers: res })
-      }).then(() => {
-        this.setState({ data: generateProgressDistanceData(this.state.mushers) })
-      })
-    }
-    */
 
 const series = [
   {name: 'Percy DeWolfe', data: [
@@ -286,11 +225,61 @@ const series = [
       ];
 
 class ProgressBarChart extends Component{
+  constructor(props) {
+    super(props);
+
   propTypes= {
     type: PropTypes.string,
     payload: PropTypes.array,
     bib: PropTypes.string,
   }
+
+  state = {
+      mushers: null,
+      data: null
+    }
+  }
+    componentDidMount() {
+      getMushers().then((res) => {
+        this.setState({ mushers: res })
+      }).then(() => {
+        this.setState({ data: generateProgressDistanceData(this.state.mushers) })
+      })
+    }
+
+    
+const generateKeyArray = (data, filterKey) => {
+  let countArray = []
+  data.forEach((datum) => {
+    if (countArray.every((object) => (object [filterKey] != datum[filterKey] ))) {
+      countArray = [...countArray, {
+        [filterKey]: datum[filterKey] 
+      }]
+    }
+  })
+  return countArray
+}
+
+const generateDataStructure = (data, id, key) => {
+  let dataArray = []
+  data.forEach((datum) => {
+    if (datum[key] == id) {
+      return dataArray = [ ...dataArray, {
+        distance: datum.run_dist } ];
+      }
+    })
+  return dataArray
+}
+
+const generateData = (data, key) => {
+  let filteredData = generateKeyArray(data, key)
+  filteredData = filterData.map((object) => {
+    return object = Object.assign({},
+    object, {data: generateDataStructure (data, object[key], key )} )
+  })
+  return filteredData
+}
+
 
   render () {
     const payload = this.props;
