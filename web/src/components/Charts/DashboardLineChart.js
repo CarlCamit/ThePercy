@@ -41,7 +41,7 @@ class CustomTooltip extends Component {
 
     const getMusherName = (id) => {
       let name = ''
-      mushers.map(musher => {
+      mushers.forEach(musher => {
         if (musher.musher_id === id) {
           name = musher.musher
         }

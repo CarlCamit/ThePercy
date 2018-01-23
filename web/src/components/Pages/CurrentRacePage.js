@@ -8,7 +8,7 @@ import { MushersContainer } from '../MushersContainer/index'
 import ProgressBarChart from '../Charts/ProgressBarChart'
 import { TableContainer } from '../TableContainer/index'
 import TimerContainer from '../TimerContainer/index'
-import { BibLegendList } from '../BibLegendList'
+// import { BibLegendList } from '../BibLegendList'
 import { filterData } from '../../utils/filterData'
 
 const musherBibHeadings = ['Bib', 'Name']
@@ -70,7 +70,7 @@ export default class CurrentRacePage extends Component {
         return (
             !!this.state.tableData && !!this.state.mushers && <main className="dashboard">
 
-                {!!this.state.data && <BibLegendList className="musherbiblist" data={this.generateProgressBarBibLegend(this.filterYear(this.state.data))} classname={"bib-list"} headings={musherBibHeadings} />}
+                {/* {!!this.state.data && <BibLegendList className="musherbiblist" data={this.generateProgressBarBibLegend(this.filterYear(this.state.data))} classname={"bib-list"} headings={musherBibHeadings} />} */}
 
                 <ProgressBarChart title="Progress Bar Chart" {...this.state} />
 
